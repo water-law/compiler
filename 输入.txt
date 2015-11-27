@@ -1,0 +1,9 @@
+<<<>--bvbdbhb WHILE (next<>NIL)  DO BEGIN if(x<>y) x:=546; END;
+
+if(b <> a) a:=b;a:=99999999;c:=a-b;end;
+--bvbdbhb WHILE (next<>NIL)  DO BEGIN if(x<>y) x:=546; END;
+	--bvbdbhb WHILE (next<>NIL)  DO BEGIN if(x<>y) x:=546; END;
+	--bvbdbhb WHILE (next<>NIL)  DO BEGIN if(x<>y) x:=546; END;
+	--bvbdbhb WHILE (next<>NIL)  DO BEGIN if(x<>y) x:=546; END;
+do begin:while() else  
+if(a-b<=0) a:=b;a:=16777216;
