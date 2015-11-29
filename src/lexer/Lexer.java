@@ -16,22 +16,12 @@ public class Lexer {
 	//private static int numlimit = 1<<24; /* 数字上限 */
 	private static int lengthlimit = 32; /* 标识符长度上限 */
 	private static int lengthvalid = 8; /* 标识符有效长度 */
-	private static String sep = System.getProperty("line.separator"); /* 系统换行 */
 	
  	public Boolean getReaderState() {/* 获取读入状态 */
 		return this.isEnd;
 	}
 
-	/*public void saveSymbolsTable() throws IOException {  //保存符号类型 
-		FileWriter writer = new FileWriter("符号表.txt");
-		writer.write("-------->TypeOfCharater<--------" + sep);
-		for(Enumeration<Token> e = table.keys();e.hasMoreElements();) { 
-			Token token = e.nextElement();
-			writer.write("<" + token + ">:<" + table.get(token) + ">" + sep);
-		}
-		writer.flush();
-		writer.close();
-	}*/
+	
  	/* 保存存储在table中的 */  
     public void saveSymbolsTable() throws IOException {  
         FileWriter writer = new FileWriter("符号表.txt");  
@@ -49,44 +39,24 @@ public class Lexer {
         writer.flush();  
     }  
 
-	public void saveTokens() throws IOException { //保存Tokens 
-		FileWriter writer = new FileWriter("Tokens表.txt");
-		//writer.write("-------->Tokens<--------" + sep);
-		writer.write("[符号]  \n");
-		writer.write("\r\n");
-		for(String token : tokens){
-			writer.write("< " + token + " >" + sep);
-		}
-		writer.flush();
-		writer.close();
-	}
     /* 保存Tokens */  
-    /*public void saveTokens() throws IOException {  
+    public void saveTokens() throws IOException {  
         FileWriter writer = new FileWriter("Tokens表.txt");  
         writer.write("[符号]  \n");  
         writer.write("\r\n");  
           
         for(int i = 0; i < tokens.size(); ++i) {  
-            String tok = (String)tokens.get(i);  
+            String tok = tokens.get(i);  
               
              //写入文件   
-            writer.write(tok + "\r\n");  
+            writer.write("< " + tok + " >" + "\r\n");  
         }     
               
         writer.flush();  
     }  
-*/
-	/*public void saveErrors() throws IOException { 保存Tokens 
-		FileWriter writer = new FileWriter("errors.txt");
-		writer.write("-------->Errors<--------" + sep);
-		for(String error : errors){
-			writer.write( error + sep);
-		}
-		writer.flush();
-		writer.close();
-	}*/
+
 	/* 保存 Errors*/
-    public void saveErrors() throws IOException{           //	待写
+    public void saveErrors() throws IOException{           //	
     	FileWriter ew = new FileWriter("errors.txt");  
        // ew.write("[符号]          [符号类型信息]\n");  
         ew.write("\r\n");  
@@ -272,8 +242,8 @@ public class Lexer {
         this.peek = ' ';  
         return true;  
     }  
-
-    public void clear() throws IOException{ /* 清除空白 */
+    /* 清除空白 */
+    public void clear() throws IOException{ 
 		for( ; ; readch() ) {   
             if(peek == ' ' || peek == '\t' || peek == '\r')  
                 continue;  
@@ -282,37 +252,55 @@ public class Lexer {
             else return ;
         }    	
     }
-    
-    public Token digitGet() throws IOException{ /* 取数字 */
+    /* 取数字 */
+    public Token digitGet() throws IOException{ 
         int value = 0;int mult = 10;
-        //boolean outofnumlimit = false;
+        double v = 0.0; double mu = 0.1;
+        boolean isReal = false;
         if(peek == '0'){
         	if(readch('x')){
         		readch();
         		mult = 36;
         	}
-        	else if(!Character.isDigit(peek)){
+        	else if(peek=='.'){//
+        		//readch();//
+        		isReal = true;//
+        	}
+        	else if(!Character.isDigit(peek)){//0000
         		Num n = new Num(value);
         		tokens.add(n.toString());
         		return n;
         	}
         }
+        if(!isReal){//
         do {  
             value = mult * value + (Character.isDigit(peek) ? (peek - '0') : (peek - 'a' + 10));
-            /*if(value >= numlimit){
-            	outofnumlimit = true;
-            }*/
             readch();  
         } while (Character.isLetterOrDigit(peek));
-        if(c10t2(value)>=24){//outofnumlimit == true
+        if(c10t2(value)>=24){
         	Error error = new Error(line,"整数越界");
         	errors.add(error);
         	tokens.add(Word.Inf.toString());
         	return Word.Inf;
         }
-        Num n = new Num(value);  
-        tokens.add(n.toString());
-        return n;  
+        }//
+        if(isReal||peek=='.'){//
+        	readch();
+        	do{
+        	v = v + mu*(peek - '0');
+        	mu=mu*0.1;
+        	readch();
+        }while (Character.isDigit(peek));}
+        if(v==0.000000){
+        	Num n = new Num(value);  
+        	tokens.add(n.toString());
+        	return n;  
+        }
+        else{
+        	Real r = new Real(v+value);  
+        	tokens.add(r.toString());
+        	return r;  
+        }
     }
     
     public Token wordGet() throws IOException{ /* 取词 */
