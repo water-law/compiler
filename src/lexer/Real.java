@@ -9,6 +9,6 @@ public class Real extends Token {
 	}
 
 	public String toString() {
-		return  "num, " + value; 
+		return "num, " + value;
 	}
 }

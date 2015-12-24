@@ -1,5 +1,8 @@
-0.55765,12.76574567<>
-<--jbgjbb
-Var c:= 0X123;0)
-if(b <> a) a:=b;a:=99999999;c:=a-b;end;
-
+x:=a+b+0.5-1920;
+y:=a-b-0x1AG-1920;
+var x:=y;z:=fh+g;
+a:=576859756;
+if(a > b) c:= 90+a;else a++;
+if(c > d) var d:=0;
+var cjgjrjrgrgruhgueruubvjvnhjgfbgbuburubrugnririogbbubvurbvububvrbubrubrbrburgrbbr;
+y:=y+x;
