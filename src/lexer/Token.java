@@ -13,7 +13,10 @@ public class Token {
 	public String toString() {
 		return "" + (char) tag;
 	}
-
+	public String getString() {
+		return (char) tag + "";
+	}
+	
 	public static void main(String[] args) {
 		Token tok = new Token('a');
 		System.out.println(tok);

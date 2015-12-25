@@ -2,20 +2,19 @@ package lexer;
 
 import java.io.*;
 import java.util.*;
+import symbols.*;
 
 public class Lexer {
 	public static int line = 1; /* 行号 */
 	char peek = ' '; /* 下一个读入字符 */
 	Hashtable<String, Word> words = new Hashtable<String, Word>(); /* 符号表 */
-	// private Hashtable<Token, String> table = new Hashtable<Token, String>();
 	// /* token集 */
 	private List<String> table = new LinkedList<String>();/* token集 */
-	private Set<String> keywords = new TreeSet<String>();/* 关键字集 */
 	private List<String> tokens = new LinkedList<String>(); /* token表 */
 	private List<Error> errors = new LinkedList<Error>(); /* 报错表 */
 	BufferedReader reader = null;
 	private Boolean isEnd = false; /* 是否读取到文件的结尾 */
-	// private static int numlimit = 1<<24; /* 数字上限 */
+	private static int numlimit = 1<<24; /* 数字上限 */
 	private static int lengthlimit = 32; /* 标识符长度上限 */
 	private static int lengthvalid = 8; /* 标识符有效长度 */
 
@@ -25,8 +24,8 @@ public class Lexer {
 
 	/* 保存存储在table中的 */
 	public void saveSymbolsTable() throws IOException {
-		FileWriter writer = new FileWriter("标识符.txt");
-		writer.write("[标识符]          [符号类型信息]\n");
+		FileWriter writer = new FileWriter("符号表.txt");
+		writer.write("[符号表]          [符号类型信息]\n");
 		writer.write("\r\n");
 
 		for (int i = 0; i < table.size(); ++i) {
@@ -50,21 +49,6 @@ public class Lexer {
 		for (int i = 0; i < tokens.size(); ++i) {
 			String tok = tokens.get(i);
 
-			// 写入文件
-			writer.write("< " + tok + " >" + "\r\n");
-		}
-
-		writer.flush();
-	}
-
-	/* 保存keywords */
-	public void saveKeywords() throws IOException {
-		FileWriter writer = new FileWriter("keywords表.txt");
-		writer.write("[关键字]  \n");
-		writer.write("\r\n");
-		Iterator<String> i = keywords.iterator();
-		while (i.hasNext()) {
-			String tok = i.next();
 			// 写入文件
 			writer.write("< " + tok + " >" + "\r\n");
 		}
@@ -236,15 +220,6 @@ public class Lexer {
 		return p;
 	}
 
-	/* 十进制数转为二进制数，二进数的位数减1 */
-	public int c10t2(int x) {
-		int count = 0;
-		while ((x = x / 2) > 0) {
-			count++;
-		}
-		return count;
-	}
-
 	public void readch() throws IOException {
 		peek = (char) reader.read();
 		peek = bts(peek);
@@ -301,7 +276,7 @@ public class Lexer {
 								: (peek - 'a' + 10));
 				readch();
 			} while (Character.isLetterOrDigit(peek));
-			if (c10t2(value) >= 24) {
+			if (value >= numlimit) {
 				Error error = new Error(line, "整数越界");
 				errors.add(error);
 				// tokens.add(Word.Inf.toString());
@@ -349,9 +324,10 @@ public class Lexer {
 			tokens.add(w.toString());
 		} else {
 			w = new Word(s, Tag.ID);
-			tokens.add("id," + w.toString());
-			if (!s.equals(""))
+			if (!s.equals("")) {
+				tokens.add("id," + w.toString());
 				table.add(w.lexme);// 加入符号表
+			}
 			words.put(s, w);
 		}
 		return w;

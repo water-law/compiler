@@ -18,8 +18,11 @@ public class Word extends Token {
 		return this.lexme;
 	}
 
-	public String keyWordtoString() {
-		return "<" + this.lexme + ">";
+	public String getString(boolean isKey) {
+		if (!isKey)
+			return "id";
+		else
+			return this.lexme;
 	}
 
 	public static final Word Absolute = new Word("absolute", Tag.ABSOLUTE),

@@ -1,4 +1,4 @@
-[标识符]          [符号类型信息]
+[符号表]          [符号类型信息]
 
 <absolute>	:			<key>
 <abstract>	:			<key>
