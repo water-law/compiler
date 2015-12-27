@@ -2,7 +2,6 @@ package lexer;
 
 import java.io.*;
 import java.util.*;
-import symbols.*;
 
 public class Lexer {
 	public static int line = 1; /* 行号 */
@@ -14,7 +13,7 @@ public class Lexer {
 	private List<Error> errors = new LinkedList<Error>(); /* 报错表 */
 	BufferedReader reader = null;
 	private Boolean isEnd = false; /* 是否读取到文件的结尾 */
-	private static int numlimit = 1<<24; /* 数字上限 */
+	private static int numlimit = 1 << 24; /* 数字上限 */
 	private static int lengthlimit = 32; /* 标识符长度上限 */
 	private static int lengthvalid = 8; /* 标识符有效长度 */
 
@@ -279,9 +278,8 @@ public class Lexer {
 			if (value >= numlimit) {
 				Error error = new Error(line, "整数越界");
 				errors.add(error);
-				// tokens.add(Word.Inf.toString());
-				// return Word.Inf;
-
+				System.out.println("at "+line+" line,  error: 整数越界;");
+				return null;
 			}
 		}
 		if (isReal || peek == '.') {
@@ -313,11 +311,13 @@ public class Lexer {
 		String s = sb.toString();
 		if (s.length() >= lengthlimit) {
 			Error error = new Error(line, "标识符长度超过限制");
+			System.out.println("at "+line+" line,  error: 标识符长度超过限制;");
 			errors.add(error);
 			s = "";
 		}
 		if (s.length() >= lengthvalid) {
 			s = s.substring(0, lengthvalid);
+			System.out.println("at "+line+" line,  warning: 标识符长度超过合法长度;");
 		}
 		Word w = words.get(s);
 		if (w != null) { /* 词存在 */
@@ -327,6 +327,8 @@ public class Lexer {
 			if (!s.equals("")) {
 				tokens.add("id," + w.toString());
 				table.add(w.lexme);// 加入符号表
+			} else {
+				return null;
 			}
 			words.put(s, w);
 		}
@@ -353,7 +355,8 @@ public class Lexer {
 			if (readch('-')) { /* 清除注释 */
 				while (peek != '\n' && (int) peek != 0xffff)
 					readch();
-				return Word.Note;
+				// return Word.Note;
+				return null;
 			} else
 				return Operation.Minus;
 		}
@@ -392,7 +395,7 @@ public class Lexer {
 		/* 运算符识别 */
 		if (isOperation(peek)) {
 			Token t = operationGet();
-			tokens.add(t.toString());
+			if(t!=null)tokens.add(t.toString());
 			return t;
 		}
 

@@ -1,4 +1,4 @@
-package symbols;
+package lexer;
 
 import lexer.*;
 

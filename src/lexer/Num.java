@@ -15,4 +15,8 @@ public class Num extends Token {
 	public String toString() {
 		return "num, " + value;
 	}
+	
+	public String getString() {
+		return "num";
+	}
 }

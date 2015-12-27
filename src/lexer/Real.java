@@ -4,11 +4,11 @@ public class Real extends Token {
 	public final double value;
 
 	public Real(double v) {
-		super(Tag.NUM);
+		super(Tag.REAL);
 		value = v;
 	}
 
 	public String toString() {
-		return "num, " + value;
+		return "Real, " + value;
 	}
 }

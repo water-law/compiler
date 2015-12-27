@@ -100,8 +100,8 @@ public class Word extends Token {
 					Tag.VIRTUAL), While = new Word("while", Tag.WHILE),
 			With = new Word("with", Tag.WITH), Write = new Word("write",
 					Tag.WRITE),
-			Writeonly = new Word("writeonly", Tag.WRITEONLY),
+			Writeonly = new Word("writeonly", Tag.WRITEONLY);
 			// Inf = new Word("整数越界",Tag.INF),
-			Note = new Word("注释", Tag.NOTE);
+			// Note = new Word("注释", Tag.NOTE);
 
 }

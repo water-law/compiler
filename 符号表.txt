@@ -121,12 +121,8 @@
 <comp>	:			<key>
 <char>	:			<key>
 <boolean>	:			<key>
-<x>	:			<id>
+<test>	:			<id>
 <a>	:			<id>
 <b>	:			<id>
+<x>	:			<id>
 <y>	:			<id>
-<z>	:			<id>
-<fh>	:			<id>
-<g>	:			<id>
-<c>	:			<id>
-<d>	:			<id>
