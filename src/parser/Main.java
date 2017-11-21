@@ -17,17 +17,17 @@ public class Main {
 	
 	public static void init() throws IOException{
 		input = new Input();
-		inputList = input.getList();// ÊäÈë±í
-		statusStack = new Stack<Integer>();// ×´Ì¬Õ»
-		signStack = new Stack<String>();// ·ûºÅ±í
+		inputList = input.getList();// è¾“å…¥è¡¨
+		statusStack = new Stack<Integer>();// çŠ¶æ€æ ˆ
+		signStack = new Stack<String>();// ç¬¦å·è¡¨
 		action = Action.getInstance();
 		expr = Expr.getInstance();
 		statusStack.push(0);
 		signStack.push("$");
-		System.out.println("×´Ì¬Õ»£º" + statusStack.toString());
-		System.out.println("·ûºÅÕ»£º" + signStack.toString());
-		System.out.println("ÊäÈëÕ»£º" + inputList.toString());
-		System.out.println("¶¯×÷£ºÒÆÈë" + "\n");
+		System.out.println("çŠ¶æ€æ ˆï¼š" + statusStack.toString());
+		System.out.println("ç¬¦å·æ ˆï¼š" + signStack.toString());
+		System.out.println("è¾“å…¥æ ˆï¼š" + inputList.toString());
+		System.out.println("åŠ¨ä½œï¼šç§»å…¥" + "\n");
 
 	}
 	public static void main(String[] args) throws IOException {
@@ -35,15 +35,15 @@ public class Main {
 		init();
 		
 		String inputCur = inputList.pop();
-		int stateCur; // µ±Ç°×´Ì¬
-		String signCur; // µ±Ç°·ûºÅ
+		int stateCur; // å½“å‰çŠ¶æ€
+		String signCur; // å½“å‰ç¬¦å·
 		for (; inputList != null;) {
-			stateCur = statusStack.peek();//peek()¶ÁÈ¡Õ»¶¥ÔªËØµ«²»Å×³öËü
+			stateCur = statusStack.peek();//peek()è¯»å–æ ˆé¡¶å…ƒç´ ä½†ä¸æŠ›å‡ºå®ƒ
 			signCur = signStack.peek();
-			// ´Óµ±Ç°×´Ì¬ºÍÊäÈë£¬µÃ³öÏÂÒ»²½Òª×öÊ²Ã´
+			// ä»å½“å‰çŠ¶æ€å’Œè¾“å…¥ï¼Œå¾—å‡ºä¸‹ä¸€æ­¥è¦åšä»€ä¹ˆ
 			nextAction = action.get(stateCur, inputCur);
 			if (nextAction == null) {
-				System.out.println("³ö´í£¬µ±Ç°×´Ì¬Îª£ºS" + stateCur);
+				System.out.println("å‡ºé”™ï¼Œå½“å‰çŠ¶æ€ä¸ºï¼šS" + stateCur);
 				break;
 			}
 			char type = nextAction.getType();
@@ -53,13 +53,13 @@ public class Main {
 			case 's':
 				statusStack.push(nextState);
 				signStack.push(inputCur);
-				actionPrint = "ÒÆÈë";
+				actionPrint = "ç§»å…¥";
 				break;
 			case 'r':
 				Rules ruleObject = expr.get(nextState);
 
 				int reduceNum = ruleObject.getRightNum();
-				// ¹éÔ¼µÄÓÒ²à¿ÉÄÜ²»Ö¹Ò»¸ö£¬¸ù¾İ·µ»ØµÄ¸öÊıÅĞ¶Ï
+				// å½’çº¦çš„å³ä¾§å¯èƒ½ä¸æ­¢ä¸€ä¸ªï¼Œæ ¹æ®è¿”å›çš„ä¸ªæ•°åˆ¤æ–­
 				for (int i = reduceNum; i > 0; i--) {
 					statusStack.pop();
 					signStack.pop();
@@ -70,7 +70,7 @@ public class Main {
 				nextAction = action.get(stateCur, gotoStatement);
 				nextState = nextAction.getStatusNumberNext();
 				statusStack.push(nextState);
-				actionPrint = "¹éÔ¼/" + ruleObject.getLeft() + " -> " + ruleObject.getRight();
+				actionPrint = "å½’çº¦/" + ruleObject.getLeft() + " -> " + ruleObject.getRight();
 				break;
 			case 'a':
 				System.out.println("accept");
@@ -78,10 +78,10 @@ public class Main {
 			default:
 				break;
 			}
-			System.out.println("×´Ì¬Õ»£º" + statusStack.toString());
-			System.out.println("·ûºÅÕ»£º" + signStack.toString());
-			System.out.println("ÊäÈëÕ»£º" + inputList.toString());
-			System.out.println("¶¯×÷£º" + actionPrint + "\n");
+			System.out.println("çŠ¶æ€æ ˆï¼š" + statusStack.toString());
+			System.out.println("ç¬¦å·æ ˆï¼š" + signStack.toString());
+			System.out.println("è¾“å…¥æ ˆï¼š" + inputList.toString());
+			System.out.println("åŠ¨ä½œï¼š" + actionPrint + "\n");
 
 			if (type == 's') {
 				inputCur = inputList.pop();

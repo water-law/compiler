@@ -15,7 +15,7 @@ public class Input {
 		Lexer lexer = new Lexer();
 		boolean iskey;
 
-		// 0xffffÊÇEOF
+		// 0xffffæ˜¯EOF
 		while (lexer.getReaderState() == false) {//(int) lexer.peek != 0xffff
 			Token token = lexer.scan();
 			if (token != null) {
@@ -32,9 +32,9 @@ public class Input {
 				} else if (token instanceof Real) {
 					inputStack.add(token.getString());
 				} else {
-					// ÆÁ±Î»»ĞĞºÍ»Ø³µµÄASCIIÂëÖµ£¬10ºÍ13
+					// å±è”½æ¢è¡Œå’Œå›è½¦çš„ASCIIç å€¼ï¼Œ10å’Œ13
 					if (token.tag != 13 && token.tag != 10) {
-						inputStack.add(token.getString());//Õâ¾ä»°ÓĞÎÊÌâ
+						inputStack.add(token.getString());//è¿™å¥è¯æœ‰é—®é¢˜
 					}
 				}
 			}

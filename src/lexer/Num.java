@@ -1,8 +1,8 @@
 package lexer;
 
 /*
- * ÃèÊöÕûÊýµÄÀà£¬ÅÉÉúÓÚToken£¬Ôö¼ÓÁËÒ»¸öÊý¾Ý³ÉÔ±value£¨´ÊËØ£¬×¢ÒâËüµÄÀàÐÍ£©£¬
- * ËüµÄ¹¹Ôìº¯ÊýÔÚÀûÓÃ»ùÀà¹¹Ôìº¯Êý³õÊ¼»¯tagÖµºó£¬»¹¸øvalue¸³ÁËÖµ¡£
+ * æè¿°æ•´æ•°çš„ç±»ï¼Œæ´¾ç”ŸäºŽTokenï¼Œå¢žåŠ äº†ä¸€ä¸ªæ•°æ®æˆå‘˜valueï¼ˆè¯ç´ ï¼Œæ³¨æ„å®ƒçš„ç±»åž‹ï¼‰ï¼Œ
+ * å®ƒçš„æž„é€ å‡½æ•°åœ¨åˆ©ç”¨åŸºç±»æž„é€ å‡½æ•°åˆå§‹åŒ–tagå€¼åŽï¼Œè¿˜ç»™valueèµ‹äº†å€¼ã€‚
  */
 public class Num extends Token {
 	public final int value;

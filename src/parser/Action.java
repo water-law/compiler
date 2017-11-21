@@ -45,7 +45,7 @@ public class Action {
 			actionMapList.add(new HashMap<String, NextAction>());
 		}
 
-		// DiyStringµÄtype £º 's'Îªstatus 'r'Îªreduce£¨¹éÔ¼£© 'a'Îªaccept 'g'Îªgoto
+		// DiyStringçš„type ï¼š 's'ä¸ºstatus 'r'ä¸ºreduceï¼ˆå½’çº¦ï¼‰ 'a'ä¸ºaccept 'g'ä¸ºgoto
 		HashMap<String, NextAction> mapCur;
 
 		// S0

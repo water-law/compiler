@@ -1,4 +1,4 @@
-[符号表]          [符号类型信息]
+[绗﹀彿琛╙          [绗﹀彿绫诲瀷淇℃伅]
 
 <absolute>	:			<key>
 <abstract>	:			<key>

@@ -1,7 +1,7 @@
 package parser;
 
 /* 
- * Ö÷³ÌĞò 
+ * ä¸»ç¨‹åº 
  */
 import java.io.*;
 import java.lang.reflect.Field;
@@ -16,7 +16,7 @@ public class Main0 {
 			lexer.scan();
 		}
 
-		/* ±£´æÏà¹ØĞÅÏ¢ */
+		/* ä¿å­˜ç›¸å…³ä¿¡æ¯ */
 		lexer.saveTokens(); //
 		lexer.saveSymbolsTable(); //
 		lexer.saveErrors();//

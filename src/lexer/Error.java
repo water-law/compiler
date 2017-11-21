@@ -14,7 +14,7 @@ public class Error {
 	}
 
 	public static void main(String[] args) {
-		Error e = new Error(1, "数组越界");
+		Error e = new Error(1, "鏁扮粍瓒婄晫");
 		System.out.println(e.writeError());
 	}
 }

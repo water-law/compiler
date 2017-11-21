@@ -14,7 +14,7 @@ public class NextAction {
 		this.stateNumberNext = statusNumber;
 	}
 
-	// 's'为status  'r'为reduce（归约） 'a'为accept 'g'为goto
+	// 's'涓簊tatus  'r'涓簉educe锛堝綊绾︼級 'a'涓篴ccept 'g'涓篻oto
 	public char getType() {
 		return type;
 	}

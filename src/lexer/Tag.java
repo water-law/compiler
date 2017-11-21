@@ -1,7 +1,7 @@
 package lexer;
 
 /*
- * Tag类定义部分记号对应的常量
+ * Tag绫诲畾涔夐儴鍒嗚鍙峰搴旂殑甯搁噺
  */
 public class Tag {
 	public final static int
@@ -31,7 +31,7 @@ public class Tag {
 			NOT = 273,//
 			REAL = 274,
 			TEMP = 275,
-			/* 后面添加 */
+			/* 鍚庨潰娣诲姞 */
 			ABSOLUTE = 276,
 			ABSTRACT = 277,
 			ARRAY = 278,

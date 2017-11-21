@@ -4,32 +4,32 @@ import java.io.*;
 import java.util.*;
 
 public class Lexer {
-	public static int line = 1; /* ĞĞºÅ */
-	char peek = ' '; /* ÏÂÒ»¸ö¶ÁÈë×Ö·û */
-	Hashtable<String, Word> words = new Hashtable<String, Word>(); /* ·ûºÅ±í */
-	// /* token¼¯ */
-	private List<String> table = new LinkedList<String>();/* token¼¯ */
-	private List<String> tokens = new LinkedList<String>(); /* token±í */
-	private List<Error> errors = new LinkedList<Error>(); /* ±¨´í±í */
+	public static int line = 1; /* è¡Œå· */
+	char peek = ' '; /* ä¸‹ä¸€ä¸ªè¯»å…¥å­—ç¬¦ */
+	Hashtable<String, Word> words = new Hashtable<String, Word>(); /* ç¬¦å·è¡¨ */
+	// /* tokené›† */
+	private List<String> table = new LinkedList<String>();/* tokené›† */
+	private List<String> tokens = new LinkedList<String>(); /* tokenè¡¨ */
+	private List<Error> errors = new LinkedList<Error>(); /* æŠ¥é”™è¡¨ */
 	BufferedReader reader = null;
-	private Boolean isEnd = false; /* ÊÇ·ñ¶ÁÈ¡µ½ÎÄ¼şµÄ½áÎ² */
-	private static int numlimit = 1 << 24; /* Êı×ÖÉÏÏŞ */
-	private static int lengthlimit = 32; /* ±êÊ¶·û³¤¶ÈÉÏÏŞ */
-	private static int lengthvalid = 8; /* ±êÊ¶·ûÓĞĞ§³¤¶È */
+	private Boolean isEnd = false; /* æ˜¯å¦è¯»å–åˆ°æ–‡ä»¶çš„ç»“å°¾ */
+	private static int numlimit = 1 << 24; /* æ•°å­—ä¸Šé™ */
+	private static int lengthlimit = 32; /* æ ‡è¯†ç¬¦é•¿åº¦ä¸Šé™ */
+	private static int lengthvalid = 8; /* æ ‡è¯†ç¬¦æœ‰æ•ˆé•¿åº¦ */
 
-	public Boolean getReaderState() {/* »ñÈ¡¶ÁÈë×´Ì¬ */
+	public Boolean getReaderState() {/* è·å–è¯»å…¥çŠ¶æ€ */
 		return this.isEnd;
 	}
 
-	/* ±£´æ´æ´¢ÔÚtableÖĞµÄ */
+	/* ä¿å­˜å­˜å‚¨åœ¨tableä¸­çš„ */
 	public void saveSymbolsTable() throws IOException {
-		FileWriter writer = new FileWriter("·ûºÅ±í.txt");
-		writer.write("[·ûºÅ±í]          [·ûºÅÀàĞÍĞÅÏ¢]\n");
+		FileWriter writer = new FileWriter("ç¬¦å·è¡¨.txt");
+		writer.write("[ç¬¦å·è¡¨]          [ç¬¦å·ç±»å‹ä¿¡æ¯]\n");
 		writer.write("\r\n");
 
 		for (int i = 0; i < table.size(); ++i) {
 			String w = table.get(i);
-			/* Ğ´ÈëÎÄ¼ş */
+			/* å†™å…¥æ–‡ä»¶ */
 			if (i > 120)
 				writer.write("<" + w + ">	:			<id>" + "\r\n");
 			else
@@ -39,23 +39,23 @@ public class Lexer {
 		writer.flush();
 	}
 
-	/* ±£´æTokens */
+	/* ä¿å­˜Tokens */
 	public void saveTokens() throws IOException {
-		FileWriter writer = new FileWriter("Tokens±í.txt");
-		writer.write("[·ûºÅ]  \n");
+		FileWriter writer = new FileWriter("Tokensè¡¨.txt");
+		writer.write("[ç¬¦å·]  \n");
 		writer.write("\r\n");
 
 		for (int i = 0; i < tokens.size(); ++i) {
 			String tok = tokens.get(i);
 
-			// Ğ´ÈëÎÄ¼ş
+			// å†™å…¥æ–‡ä»¶
 			writer.write("< " + tok + " >" + "\r\n");
 		}
 
 		writer.flush();
 	}
 
-	/* ±£´æ Errors */
+	/* ä¿å­˜ Errors */
 	public void saveErrors() throws IOException {
 		FileWriter ew = new FileWriter("errors.txt");
 		ew.write("\r\n");
@@ -63,26 +63,26 @@ public class Lexer {
 		for (int i = 0; i < errors.size(); ++i) {
 
 			Error error = errors.get(i);
-			/* Ğ´ÈëÎÄ¼ş */
+			/* å†™å…¥æ–‡ä»¶ */
 			ew.write(error.writeError() + "\r\n");
 		}
 
 		ew.flush();
 	}
 
-	void reserve(Word w) { /* ±£´æµ¥´Êµ½·ûºÅ±í */
+	void reserve(Word w) { /* ä¿å­˜å•è¯åˆ°ç¬¦å·è¡¨ */
 		words.put(w.lexme, w);
 		table.add(w.lexme);
 	}
 
 	public Lexer() {
-		try { /* ³õÊ¼»¯¶ÁÈ¡ÎÄ¼ş±äÁ¿ */
-			reader = new BufferedReader(new FileReader("ÊäÈë.txt"));
+		try { /* åˆå§‹åŒ–è¯»å–æ–‡ä»¶å˜é‡ */
+			reader = new BufferedReader(new FileReader("è¾“å…¥.txt"));
 		} catch (IOException e) {
 			System.out.print(e);
 		}
 
-		/* ¹Ø¼ü×Ö */{
+		/* å…³é”®å­— */{
 			this.reserve(Word.Absolute);
 			this.reserve(Word.Abstract);
 			this.reserve(Word.Array);
@@ -184,7 +184,7 @@ public class Lexer {
 			this.reserve(Word.Write);
 			this.reserve(Word.Writeonly);
 		}
-		/* ÔËËã¹Ø¼ü×Ö */{
+		/* è¿ç®—å…³é”®å­— */{
 			this.reserve(Operation.And);
 			this.reserve(Operation.DivInt);
 			this.reserve(Operation.Mod);
@@ -192,7 +192,7 @@ public class Lexer {
 			this.reserve(Operation.Or);
 			this.reserve(Operation.Xor);
 		}
-		/* ÀàĞÍ */{
+		/* ç±»å‹ */{
 			this.reserve(Type.Shortint);
 			this.reserve(Type.Integer);
 			this.reserve(Type.Longint);
@@ -212,7 +212,7 @@ public class Lexer {
 	}
 
 	public char bts(char p) {
-		/* Èç¹ûpeekÊÇ´óĞ´×ÖÄ¸£¬Ôò»¯ÎªĞ¡Ğ´×ÖÄ¸ */
+		/* å¦‚æœpeekæ˜¯å¤§å†™å­—æ¯ï¼Œåˆ™åŒ–ä¸ºå°å†™å­—æ¯ */
 		if (p >= 'A' && p <= 'Z') {
 			p = (char) (p + 32);
 		}
@@ -236,7 +236,7 @@ public class Lexer {
 		return true;
 	}
 
-	/* Çå³ı¿Õ°× */
+	/* æ¸…é™¤ç©ºç™½ */
 	public void clear() throws IOException {
 		for (;; readch()) {
 			if (peek == ' ' || peek == '\t' || peek == '\r')
@@ -248,7 +248,7 @@ public class Lexer {
 		}
 	}
 
-	/* È¡Êı×Ö */
+	/* å–æ•°å­— */
 	public Token digitGet() throws IOException {
 		int value = 0;
 		int mult = 10;
@@ -276,9 +276,9 @@ public class Lexer {
 				readch();
 			} while (Character.isLetterOrDigit(peek));
 			if (value >= numlimit) {
-				Error error = new Error(line, "ÕûÊıÔ½½ç");
+				Error error = new Error(line, "æ•´æ•°è¶Šç•Œ");
 				errors.add(error);
-				System.out.println("at "+line+" line,  error: ÕûÊıÔ½½ç;");
+				System.out.println("at "+line+" line,  error: æ•´æ•°è¶Šç•Œ;");
 				return null;
 			}
 		}
@@ -301,7 +301,7 @@ public class Lexer {
 		}
 	}
 
-	public Token wordGet() throws IOException { /* È¡´Ê */
+	public Token wordGet() throws IOException { /* å–è¯ */
 		StringBuffer sb = new StringBuffer();
 		do {
 			sb.append(peek);
@@ -310,23 +310,23 @@ public class Lexer {
 
 		String s = sb.toString();
 		if (s.length() >= lengthlimit) {
-			Error error = new Error(line, "±êÊ¶·û³¤¶È³¬¹ıÏŞÖÆ");
-			System.out.println("at "+line+" line,  error: ±êÊ¶·û³¤¶È³¬¹ıÏŞÖÆ;");
+			Error error = new Error(line, "æ ‡è¯†ç¬¦é•¿åº¦è¶…è¿‡é™åˆ¶");
+			System.out.println("at "+line+" line,  error: æ ‡è¯†ç¬¦é•¿åº¦è¶…è¿‡é™åˆ¶;");
 			errors.add(error);
 			s = "";
 		}
 		if (s.length() >= lengthvalid) {
 			s = s.substring(0, lengthvalid);
-			System.out.println("at "+line+" line,  warning: ±êÊ¶·û³¤¶È³¬¹ıºÏ·¨³¤¶È;");
+			System.out.println("at "+line+" line,  warning: æ ‡è¯†ç¬¦é•¿åº¦è¶…è¿‡åˆæ³•é•¿åº¦;");
 		}
 		Word w = words.get(s);
-		if (w != null) { /* ´Ê´æÔÚ */
+		if (w != null) { /* è¯å­˜åœ¨ */
 			tokens.add(w.toString());
 		} else {
 			w = new Word(s, Tag.ID);
 			if (!s.equals("")) {
 				tokens.add("id," + w.toString());
-				table.add(w.lexme);// ¼ÓÈë·ûºÅ±í
+				table.add(w.lexme);// åŠ å…¥ç¬¦å·è¡¨
 			} else {
 				return null;
 			}
@@ -340,7 +340,7 @@ public class Lexer {
 				|| peek == '>' || peek == '<' || peek == '=' || peek == ':';
 	}
 
-	/* È¡ÔËËã·û */
+	/* å–è¿ç®—ç¬¦ */
 	private Token operationGet() throws IOException {
 		switch (peek) {
 		case ':':
@@ -352,7 +352,7 @@ public class Lexer {
 			readch();
 			return Operation.Plus;
 		case '-': {
-			if (readch('-')) { /* Çå³ı×¢ÊÍ */
+			if (readch('-')) { /* æ¸…é™¤æ³¨é‡Š */
 				while (peek != '\n' && (int) peek != 0xffff)
 					readch();
 				// return Word.Note;
@@ -377,7 +377,7 @@ public class Lexer {
 		case '<':
 			if (readch('='))
 				return Operation.Le;
-			else if (peek == '>') { // peekÖµÒÑ¾­¸Ä±ä
+			else if (peek == '>') { // peekå€¼å·²ç»æ”¹å˜
 				peek = ' ';
 				return Operation.Ne;
 			} else
@@ -388,28 +388,28 @@ public class Lexer {
 
 	public Token scan() throws IOException {
 
-		/* Çå³ı¿Õ°× */
+		/* æ¸…é™¤ç©ºç™½ */
 		clear();
 		// System.out.println(peek);
 
-		/* ÔËËã·ûÊ¶±ğ */
+		/* è¿ç®—ç¬¦è¯†åˆ« */
 		if (isOperation(peek)) {
 			Token t = operationGet();
 			if(t!=null)tokens.add(t.toString());
 			return t;
 		}
 
-		/* ÕûÊıfloatÊıÊ¶±ğ */
+		/* æ•´æ•°floatæ•°è¯†åˆ« */
 		if (Character.isDigit(peek)) {
 			return digitGet();
 		}
 
-		/* ¹Ø¼ü×Ö&±êÊ¶·ûÊ¶±ğ */
+		/* å…³é”®å­—&æ ‡è¯†ç¬¦è¯†åˆ« */
 		if (Character.isLetter(peek)) {
 			return wordGet();
 		}
 
-		/* µ¥×Ö·û´ÊËØ */
+		/* å•å­—ç¬¦è¯ç´  */
 		Token tok = new Token(peek);
 		if ((int) peek != 0xffff)
 			tokens.add(tok.toString());

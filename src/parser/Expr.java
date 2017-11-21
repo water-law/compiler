@@ -29,7 +29,7 @@ public class Expr {
 		map.put(3, new Rules("id_lists", "id_lists , id", 3));
 		map.put(4, new Rules("compound_stmt", "begin optional_stmts end", 3));
 		map.put(5, new Rules("optional_stmts", "stmts", 1));
-		map.put(6, new Rules("optional_stmts", "¦Å", 0));
+		map.put(6, new Rules("optional_stmts", "Îµ", 0));
 		map.put(7, new Rules("stmts", "stmt", 1));
 		map.put(8, new Rules("stmts", "stmts; stmt", 3));
 		map.put(9, new Rules("stmt", "id := expr", 3));

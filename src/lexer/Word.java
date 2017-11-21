@@ -3,8 +3,8 @@ package lexer;
 import lexer.*;
 
 /*
- * ÃèÊö±£Áô×Ö¡¢±êÊ¶·ûºÍ¸÷ÖÖ¸´ºÏÔËËã·û£¬
- * ÅÉÉúÓÚToken£¬Ôö¼ÓÁËÒ»¸öÊı¾İ³ÉÔ±lexeme£¬ËüµÄ¹¹Ôìº¯ÊıÓĞÁ½¸ö²ÎÊı£¨Ç°ÃæÊÇ´ÊËØ£¬ºóÃæÊÇ¼ÇºÅÖµ£©¡£
+ * æè¿°ä¿ç•™å­—ã€æ ‡è¯†ç¬¦å’Œå„ç§å¤åˆè¿ç®—ç¬¦ï¼Œ
+ * æ´¾ç”ŸäºTokenï¼Œå¢åŠ äº†ä¸€ä¸ªæ•°æ®æˆå‘˜lexemeï¼Œå®ƒçš„æ„é€ å‡½æ•°æœ‰ä¸¤ä¸ªå‚æ•°ï¼ˆå‰é¢æ˜¯è¯ç´ ï¼Œåé¢æ˜¯è®°å·å€¼ï¼‰ã€‚
  */
 public class Word extends Token {
 	public String lexme = "";
@@ -101,7 +101,7 @@ public class Word extends Token {
 			With = new Word("with", Tag.WITH), Write = new Word("write",
 					Tag.WRITE),
 			Writeonly = new Word("writeonly", Tag.WRITEONLY);
-			// Inf = new Word("ÕûÊıÔ½½ç",Tag.INF),
-			// Note = new Word("×¢ÊÍ", Tag.NOTE);
+			// Inf = new Word("æ•´æ•°è¶Šç•Œ",Tag.INF),
+			// Note = new Word("æ³¨é‡Š", Tag.NOTE);
 
 }
