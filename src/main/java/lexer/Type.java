@@ -1,14 +1,12 @@
 package lexer;
 
-import lexer.*;
-
-public class Type extends Word {
+public class Type extends lexer.Word {
 
 	public Type(String s, int tag) {
 		super(s, tag);
 	}
 
-	public static final Type Shortint = new Type("shortint", Tag.BASIC),
+	public static final lexer.Type Shortint = new Type("shortint", Tag.BASIC),
 			Integer = new Type("integer", Tag.BASIC), Longint = new Type(
 					"longint", Tag.BASIC), Byte = new Type("byte", Tag.BASIC),
 			Word = new Type("word", Tag.BASIC), Dword = new Type("dword",

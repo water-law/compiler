@@ -3,10 +3,10 @@ package parser;
 /* 
  * 主程序 
  */
-import java.io.*;
-import java.lang.reflect.Field;
 
-import lexer.*;
+import lexer.Lexer;
+
+import java.io.IOException;
 
 public class Main0 {
 	public static void main(String[] args) throws IOException{

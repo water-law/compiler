@@ -1,9 +1,10 @@
 package parser;
 
+import lexer.Input;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Stack;
-import lexer.Input;
 
 public class Main {
 

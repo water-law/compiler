@@ -1,14 +1,10 @@
 package lexer;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import lexer.Input;
 public class InputTest {
 
 	

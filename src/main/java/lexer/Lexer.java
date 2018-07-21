@@ -1,7 +1,12 @@
 package lexer;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Lexer {
 	public static int line = 1; /* 行号 */
